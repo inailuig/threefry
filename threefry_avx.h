@@ -73,9 +73,10 @@ void ThreeFry2x32Kernel4(const std::uint32_t* key0,
     x1_2 = _mm256_add_epi32(x1_2,ks1); // lat 1, tp 3
     x1_3 = _mm256_add_epi32(x1_3,ks1); // lat 1, tp 3
 
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[3]);
 
     const __m256i one = _mm256_set1_epi32(1u);
     const __m256i ks2p1 = _mm256_add_epi32(ks2, one);
@@ -91,11 +92,12 @@ void ThreeFry2x32Kernel4(const std::uint32_t* key0,
     x1_3 = _mm256_add_epi32(x1_3,ks2p1);
 
 
-    for (const auto& r: rotations1) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations1[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations1[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations1[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations1[3]);
 
-    const __m256i two = _mm256_add_epi32(one, one);
+    const __m256i two = _mm256_set1_epi32(2u);
     const __m256i ks0p2 = _mm256_add_epi32(ks0, two);
 
     x0_0 = _mm256_add_epi32(x0_0,ks2);
@@ -108,11 +110,12 @@ void ThreeFry2x32Kernel4(const std::uint32_t* key0,
     x1_2 = _mm256_add_epi32(x1_2, ks0p2);
     x1_3 = _mm256_add_epi32(x1_3, ks0p2);
 
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[3]);
 
-    const __m256i three = _mm256_add_epi32(two, one);
+    const __m256i three = _mm256_set1_epi32(3u);
     const __m256i ks1p3 = _mm256_add_epi32(ks1, three);
 
     x0_0 = _mm256_add_epi32(x0_0,ks0);
@@ -125,11 +128,12 @@ void ThreeFry2x32Kernel4(const std::uint32_t* key0,
     x1_2 = _mm256_add_epi32(x1_2, ks1p3);
     x1_3 = _mm256_add_epi32(x1_3, ks1p3);
 
-    for (const auto& r: rotations1) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations1[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations1[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations1[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations1[3]);
 
-    const __m256i four = _mm256_add_epi32(three, one);
+    const __m256i four = _mm256_set1_epi32(4u);
     const __m256i ks2p4 = _mm256_add_epi32(ks2, four);
     x0_0 = _mm256_add_epi32(x0_0,ks1);
     x0_1 = _mm256_add_epi32(x0_1,ks1);
@@ -141,11 +145,12 @@ void ThreeFry2x32Kernel4(const std::uint32_t* key0,
     x1_2 = _mm256_add_epi32(x1_2,ks2p4);
     x1_3 = _mm256_add_epi32(x1_3,ks2p4);
 
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2, x0_3, x1_3) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, x0_3, x1_3, rotations0[3]);
 
-    const __m256i five = _mm256_add_epi32(four, one);
+    const __m256i five = _mm256_set1_epi32(5u);
     const __m256i ks0p5 = _mm256_add_epi32(ks0, five);
 
     __m256i y0_0 = _mm256_add_epi32(x0_0,ks2);
@@ -232,9 +237,10 @@ void ThreeFry2x32Kernel3(const std::uint32_t* key0,
     x1_1 = _mm256_add_epi32(x1_1,ks1); // lat 1, tp 3
     x1_2 = _mm256_add_epi32(x1_2,ks1); // lat 1, tp 3
 
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[3]);
 
     const __m256i one = _mm256_set1_epi32(1u);
     const __m256i ks2p1 = _mm256_add_epi32(ks2, one);
@@ -248,11 +254,12 @@ void ThreeFry2x32Kernel3(const std::uint32_t* key0,
     x1_2 = _mm256_add_epi32(x1_2,ks2p1);
 
 
-    for (const auto& r: rotations1) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations1[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations1[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations1[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations1[3]);
 
-    const __m256i two = _mm256_add_epi32(one, one);
+    const __m256i two = _mm256_set1_epi32(2u);
     const __m256i ks0p2 = _mm256_add_epi32(ks0, two);
 
     x0_0 = _mm256_add_epi32(x0_0,ks2);
@@ -263,11 +270,12 @@ void ThreeFry2x32Kernel3(const std::uint32_t* key0,
     x1_1 = _mm256_add_epi32(x1_1, ks0p2);
     x1_2 = _mm256_add_epi32(x1_2, ks0p2);
 
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[3]);
 
-    const __m256i three = _mm256_add_epi32(two, one);
+    const __m256i three = _mm256_set1_epi32(3u);
     const __m256i ks1p3 = _mm256_add_epi32(ks1, three);
 
     x0_0 = _mm256_add_epi32(x0_0,ks0);
@@ -278,11 +286,12 @@ void ThreeFry2x32Kernel3(const std::uint32_t* key0,
     x1_1 = _mm256_add_epi32(x1_1, ks1p3);
     x1_2 = _mm256_add_epi32(x1_2, ks1p3);
 
-    for (const auto& r: rotations1) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations1[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations1[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations1[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations1[3]);
 
-    const __m256i four = _mm256_add_epi32(three, one);
+    const __m256i four = _mm256_set1_epi32(4u);
     const __m256i ks2p4 = _mm256_add_epi32(ks2, four);
     x0_0 = _mm256_add_epi32(x0_0,ks1);
     x0_1 = _mm256_add_epi32(x0_1,ks1);
@@ -292,11 +301,12 @@ void ThreeFry2x32Kernel3(const std::uint32_t* key0,
     x1_1 = _mm256_add_epi32(x1_1,ks2p4);
     x1_2 = _mm256_add_epi32(x1_2,ks2p4);
 
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1, x0_2, x1_2) = round(x0_0, x1_0, x0_1, x1_1,x0_2, x1_2, rotations0[3]);
 
-    const __m256i five = _mm256_add_epi32(four, one);
+    const __m256i five = _mm256_set1_epi32(5u);
     const __m256i ks0p5 = _mm256_add_epi32(ks0, five);
 
     __m256i y0_0 = _mm256_add_epi32(x0_0,ks2);
@@ -373,9 +383,10 @@ void ThreeFry2x32Kernel2(const std::uint32_t* key0,
     x1_0 = _mm256_add_epi32(x1_0,ks1); // lat 1, tp 3
     x1_1 = _mm256_add_epi32(x1_1,ks1); // lat 1, tp 3
 
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[3]);
 
     const __m256i one = _mm256_set1_epi32(1u);
     const __m256i ks2p1 = _mm256_add_epi32(ks2, one);
@@ -384,42 +395,48 @@ void ThreeFry2x32Kernel2(const std::uint32_t* key0,
     x1_0 = _mm256_add_epi32(x1_0,ks2p1);
     x1_1 = _mm256_add_epi32(x1_1,ks2p1);
 
-    for (const auto& r: rotations1) {
-      std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations1[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations1[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations1[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations1[3]);
 
-    const __m256i two = _mm256_add_epi32(one, one);
+    const __m256i two = _mm256_set1_epi32(2u);
     const __m256i ks0p2 = _mm256_add_epi32(ks0, two);
     x0_0 = _mm256_add_epi32(x0_0,ks2);
     x0_1 = _mm256_add_epi32(x0_1,ks2);
     x1_0 = _mm256_add_epi32(x1_0, ks0p2);
     x1_1 = _mm256_add_epi32(x1_1, ks0p2);
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, r);
-    }
 
-    const __m256i three = _mm256_add_epi32(two, one);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[3]);
+
+    const __m256i three = _mm256_set1_epi32(3u);
     const __m256i ks1p3 = _mm256_add_epi32(ks1, three);
     x0_0 = _mm256_add_epi32(x0_0,ks0);
     x0_1 = _mm256_add_epi32(x0_1,ks0);
     x1_0 = _mm256_add_epi32(x1_0, ks1p3);
     x1_1 = _mm256_add_epi32(x1_1, ks1p3);
-    for (const auto& r: rotations1) {
-      std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, r);
-    }
 
-    const __m256i four = _mm256_add_epi32(three, one);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations1[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations1[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations1[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations1[3]);
+
+    const __m256i four = _mm256_set1_epi32(4u);
     const __m256i ks2p4 = _mm256_add_epi32(ks2, four);
     x0_0 = _mm256_add_epi32(x0_0,ks1);
     x0_1 = _mm256_add_epi32(x0_1,ks1);
     x1_0 = _mm256_add_epi32(x1_0,ks2p4);
     x1_1 = _mm256_add_epi32(x1_1,ks2p4);
 
-    for (const auto& r: rotations0) {
-      std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, r);
-    }
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[0]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[1]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[2]);
+    std::tie(x0_0, x1_0, x0_1, x1_1) = round(x0_0, x1_0, x0_1, x1_1, rotations0[3]);
 
-    const __m256i five = _mm256_add_epi32(four, one);
+    const __m256i five = _mm256_set1_epi32(5u);
     const __m256i ks0p5 = _mm256_add_epi32(ks0, five);
     __m256i y0_0 = _mm256_add_epi32(x0_0,ks2);
     __m256i y0_1 = _mm256_add_epi32(x0_1,ks2);
@@ -466,57 +483,65 @@ void ThreeFry2x32Kernel1(const std::uint32_t* key0,
       return v3;
     };
 
-    auto round = [&rotate_left](const __m256i v0, const __m256i v1, const std::uint8_t rotation) {
-      const __m256i v0a = _mm256_add_epi32(v0, v1); // lat 1, tp 3
+    auto round = [&rotate_left](__m256i v0, __m256i v1, const std::uint8_t rotation) {
+
+      const __m256i v0a =  _mm256_add_epi32(v0, v1); // lat 1, tp 3
       const __m256i v1a = rotate_left(v1, rotation);
-      const __m256i v1b = _mm256_xor_si256(v1a, v0a); // lat 1, tp 3
+      const __m256i v1b =  _mm256_xor_si256(v1a, v0a); // lat 1, tp 3
       return std::make_pair(v0a, v1b);
     };
 
     x0 = _mm256_add_epi32(x0,ks0); // lat 1, tp 3
     x1 = _mm256_add_epi32(x1,ks1); // lat 1, tp 3
 
-    for (const auto& r: rotations0) {
-      std::tie(x0, x1) = round(x0, x1, r);
-    }
+    std::tie(x0, x1) = round(x0, x1, rotations0[0]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[1]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[2]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[3]);
 
     const __m256i one = _mm256_set1_epi32(1u);
     const __m256i ks2p1 = _mm256_add_epi32(ks2, one);
     x0 = _mm256_add_epi32(x0,ks1);
     x1 = _mm256_add_epi32(x1,ks2p1);
 
-    for (const auto& r: rotations1) {
-      std::tie(x0, x1) = round(x0, x1, r);
-    }
+    std::tie(x0, x1) = round(x0, x1, rotations1[0]);
+    std::tie(x0, x1) = round(x0, x1, rotations1[1]);
+    std::tie(x0, x1) = round(x0, x1, rotations1[2]);
+    std::tie(x0, x1) = round(x0, x1, rotations1[3]);
 
-    const __m256i two = _mm256_add_epi32(one, one);
+    const __m256i two = _mm256_set1_epi32(2u);
     const __m256i ks0p2 = _mm256_add_epi32(ks0, two);
     x0 = _mm256_add_epi32(x0,ks2);
     x1 = _mm256_add_epi32(x1, ks0p2);
 
-    for (const auto& r: rotations0) {
-      std::tie(x0, x1) = round(x0, x1, r);
-    }
+    std::tie(x0, x1) = round(x0, x1, rotations0[0]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[1]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[2]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[3]);
 
-    const __m256i three = _mm256_add_epi32(two, one);
+    const __m256i three = _mm256_set1_epi32(3u);
     const __m256i ks1p3 = _mm256_add_epi32(ks1, three);
     x0 = _mm256_add_epi32(x0,ks0);
     x1 = _mm256_add_epi32(x1, ks1p3);
 
-    for (const auto& r: rotations1) {
-      std::tie(x0, x1) = round(x0, x1, r);
-    }
+    std::tie(x0, x1) = round(x0, x1, rotations1[0]);
+    std::tie(x0, x1) = round(x0, x1, rotations1[1]);
+    std::tie(x0, x1) = round(x0, x1, rotations1[2]);
+    std::tie(x0, x1) = round(x0, x1, rotations1[3]);
 
-    const __m256i four = _mm256_add_epi32(three, one);
+
+    const __m256i four = _mm256_set1_epi32(4u);
     const __m256i ks2p4 = _mm256_add_epi32(ks2, four);
     x0 = _mm256_add_epi32(x0,ks1);
     x1 = _mm256_add_epi32(x1,ks2p4);
 
-    for (const auto& r: rotations0) {
-      std::tie(x0, x1) = round(x0, x1, r);
-    }
+    std::tie(x0, x1) = round(x0, x1, rotations0[0]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[1]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[2]);
+    std::tie(x0, x1) = round(x0, x1, rotations0[3]);
 
-    const __m256i five = _mm256_add_epi32(four, one);
+
+    const __m256i five = _mm256_set1_epi32(5u);
     const __m256i ks0p5 = _mm256_add_epi32(ks0, five);
     __m256i y0 = _mm256_add_epi32(x0,ks2);
     __m256i y1 =  _mm256_add_epi32(x1, ks0p5);
