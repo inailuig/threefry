@@ -581,7 +581,7 @@ ks[2] = 0x1BD11BDA;
 ks[2] = ks[2] ^ key0[0];
 ks[2] = ks[2] ^ key1[0];
 
-const std::uint32_t rotations[8] = {13, 15, 26, 6, 17, 29, 16, 24};
+constexpr std::uint32_t rotations[8] = {13, 15, 26, 6, 17, 29, 16, 24};
 
 for (std::int64_t idx = 0; idx < n;  idx += 1) {
     // Rotation distances specified by the Threefry2x32 algorithm.
@@ -605,33 +605,39 @@ for (std::int64_t idx = 0; idx < n;  idx += 1) {
     // We are conservative and use 20 rounds.
     x[0] = x[0] + ks[0];
     x[1] = x[1] + ks[1];
-    for (int i = 0; i < 4; ++i) {
-      round(x, rotations[i]);
-    }
+
+    round(x, rotations[0]);
+    round(x, rotations[1]);
+    round(x, rotations[2]);
+    round(x, rotations[3]);
 
     x[0] = x[0] + ks[1];
     x[1] = x[1] + ks[2] + 1u;
-    for (int i = 4; i < 8; ++i) {
-      round(x, rotations[i]);
-    }
+    round(x, rotations[4]);
+    round(x, rotations[5]);
+    round(x, rotations[6]);
+    round(x, rotations[7]);
 
     x[0] = x[0] + ks[2];
     x[1] = x[1] + ks[0] + 2u;
-    for (int i = 0; i < 4; ++i) {
-      round(x, rotations[i]);
-    }
+    round(x, rotations[0]);
+    round(x, rotations[1]);
+    round(x, rotations[2]);
+    round(x, rotations[3]);
 
     x[0] = x[0] + ks[0];
     x[1] = x[1] + ks[1] + 3u;
-    for (int i = 4; i < 8; ++i) {
-      round(x, rotations[i]);
-    }
+    round(x, rotations[4]);
+    round(x, rotations[5]);
+    round(x, rotations[6]);
+    round(x, rotations[7]);
 
     x[0] = x[0] + ks[1];
     x[1] = x[1] + ks[2] + 4u;
-    for (int i = 0; i < 4; ++i) {
-      round(x, rotations[i]);
-    }
+    round(x, rotations[0]);
+    round(x, rotations[1]);
+    round(x, rotations[2]);
+    round(x, rotations[3]);
 
     out0[idx] = x[0] + ks[2];
     out1[idx] = x[1] + ks[0] + 5u;
