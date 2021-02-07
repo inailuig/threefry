@@ -5,7 +5,7 @@ import jax.numpy as jnp
 import numpy as np
 from jax.random import threefry2x32_p
 
-num = (2**26)*3
+num = 128*8192*6
 k = jax.random.PRNGKey(123)
 
 key1, key2 = k
@@ -18,9 +18,12 @@ def bench():
     get_ipython().magic("timeit f(k).block_until_ready()")
 
 def bench2():
-    f = jax.jit(threefry2x32_p.bind)
+    def _test(*args):
+        a = threefry2x32_p.bind(*args)
+        return a[0][-1]+a[1][-1]
+    f = jax.jit(_test)
     _ = f(key1, key2, x0, x1) # compile
-    get_ipython().magic("timeit f(key1, key2, x0, x1)[0].block_until_ready()")
+    get_ipython().magic("timeit f(key1, key2, x0, x1).block_until_ready()")
 
 def bench3():
     # shape 2*num since we want to generate the same number of bits as the other benchs
