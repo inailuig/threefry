@@ -2,20 +2,29 @@
 #include "tsc_x86.h"
 #include <numeric>
 #include<iostream>
+#include <cstdlib>
 
-int main(){
-  std::uint32_t keys[] = {0, 123};
 
-  constexpr std::uint64_t n_samples = 3*(2<<10);
-  constexpr std::uint64_t n = n_samples/2;
+int main(int argc, char *argv[]){
+  std::uint32_t keys[] = {static_cast<uint32_t>(std::atoi(argv[1])), static_cast<uint32_t>(std::atoi(argv[2]))};
 
-  std::uint32_t* data = new std::uint32_t[n_samples];
+
+  const std::uint64_t n_samples = 6*static_cast<uint64_t>(std::atoi(argv[3]));
+  const std::uint64_t n = n_samples/2;
+
+  //std::uint32_t* data = new std::uint32_t[n_samples];
+  std::uint32_t* data = (std::uint32_t*) _mm_malloc(sizeof(std::uint32_t)*n_samples, 32);
+
+
   std::iota(data, data+n_samples, 0);
 
   std::uint32_t* data0 = data;
   std::uint32_t* data1 = data+n;
 
-  std::uint32_t* out = new std::uint32_t[n_samples];
+  //std::uint32_t* out = new std::uint32_t[n_samples];
+  std::uint32_t* out = (std::uint32_t*) _mm_malloc(sizeof(std::uint32_t)*n_samples, 32);
+
+
   //std::uint32_t* out = data;
   std::uint32_t* out0 = out;
   std::uint32_t* out1 = out+n;
@@ -109,7 +118,9 @@ int main(){
   std::cout << "cycles4 " <<  cycles << std::endl;
   std::cout << "perf4 " <<  perf << std::endl;
 
-  delete[] data;
-  delete[] out;
+  //delete[] data;
+  //delete[] out;
+  _mm_free(out);
+  _mm_free(data);
 
 }

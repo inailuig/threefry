@@ -2,6 +2,9 @@
 #include <tuple>
 #include <cstdint>
 
+
+// TODO aligned load/store?
+
 void ThreeFry2x32Kernel4(const std::uint32_t* key0,
                                    const std::uint32_t* key1,
                                    const std::uint32_t* data0,
@@ -476,6 +479,13 @@ void ThreeFry2x32Kernel1(const std::uint32_t* key0,
     __m256i x1 = _mm256_loadu_si256((__m256i*) &data1[idx]);
 
     auto rotate_left = [](const __m256i v, const std::uint8_t distance) {
+
+      // TODO some of these can be done with just one call to PSHUFD / _mm256_shuffle_epi8
+      // (e.g. distance=16)
+      // whiich is port 5 only however
+      // clang uses:
+      // b = [2,3,0,1,  6,7,4,5,  10,11,8,9,  14,15,12,13,  18,19,16,17,  22,23,20,21,  26,27,24,25,  30,31,28,29]
+      // b = [1,2,3,0,  5,6,7,4,  9,10,11,8,  13,14,15,12,  17,18,19,16,  21,22,23,20,  25,26,27,24,  29,30,31,28]
 
       const __m256i v1 = _mm256_slli_epi32(v, distance); // lat 1, tp 2
       const __m256i v2 = _mm256_srli_epi32(v, 32-distance);
