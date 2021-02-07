@@ -22,7 +22,7 @@ void ThreeFry2x32(void** outbuf, void **inbuf) {
 
   //std::cout << "n: " << n << std::endl;
 
-  ThreeFry2x32Kernel2(keys[0], keys[1], data[0], data[1], out[0], out[1], n);
+  ThreeFry2x32Kernel4(keys[0], keys[1], data[0], data[1], out[0], out[1], n);
 }
 
 pybind11::dict Registrations() {
