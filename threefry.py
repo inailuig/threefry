@@ -5,13 +5,15 @@ from jaxlib import xla_client
 from jax.interpreters import xla
 import jax.random
 from jax.random import threefry2x32_p
+import numpy as np
 
-
-
-from build import threefry_avx
+# TODO
+import sys
+sys.path.append("./build")
+import threefry_avx
 
 for _name, _value in threefry_avx.registrations().items():
-    xla_client.register_custom_call_target('_name', _value, platform="cpu")
+    xla_client.register_custom_call_target(_name, _value, platform="cpu")
 
 
 def threefry2x32(c, keys, data):
