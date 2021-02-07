@@ -6,15 +6,21 @@
 
 
 int main(int argc, char *argv[]){
+  if(argc != 5){
+    std::cout << "usage: ./bench 0 123 2048 16384" << std::endl;
+    return 1;
+  }
   std::uint32_t keys[] = {static_cast<uint32_t>(std::atoi(argv[1])), static_cast<uint32_t>(std::atoi(argv[2]))};
 
 
   const std::uint64_t n_samples = 6*static_cast<uint64_t>(std::atoi(argv[3]));
   const std::uint64_t n = n_samples/2;
 
+  const std::uint64_t num_runs = static_cast<uint64_t>(std::atoi(argv[4]));
+
+
   //std::uint32_t* data = new std::uint32_t[n_samples];
   std::uint32_t* data = (std::uint32_t*) _mm_malloc(sizeof(std::uint32_t)*n_samples, 32);
-
 
   std::iota(data, data+n_samples, 0);
 
@@ -50,9 +56,8 @@ int main(int argc, char *argv[]){
   std::cout << "d4: "  << out[0] << std::endl;
 
   myInt64 start, end;
-	double cycles = 0.;
+  double cycles = 0.;
   double perf = 0.0;
-  long num_runs = 16384;
   //long flops = 117*n; // (4*5+3)*5 + 2
   //long flops = 37*n; // (4*1+3)*5 + 2; add only
   long flops = 77*n; // (4*3+3)*5 + 2; add & logic ops only, shift not
